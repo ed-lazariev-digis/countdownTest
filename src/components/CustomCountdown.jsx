@@ -28,21 +28,22 @@ const CustomCountdown = ({date, type}) => {
     return () => clearInterval(timer);
   }, [date]);
 
-  const renderLeftDate = (timeItem, timeRadius, word, type) => {
-    return (
-      <>
-        {type === "radius" ?
-          <div className="countdown-item">
-            <SVGCircle radius={timeRadius}/>
-            {timeItem}
-            <span>{word}</span>
-          </div>
-        :
-          <div className="timer-item">
-            <span>{timeItem}</span>{timeItem === 1 ? 'Day' : word}
-          </div>}
-      </>
-    )
+  const renderLeftDate = (timeItem, timeRadius, word) => {
+    if(type === "radius"){
+      return (
+        <div className="countdown-item">
+          <SVGCircle radius={timeRadius}/>
+          {timeItem}
+          <span>{word}</span>
+        </div>
+      )
+    } else {
+      return (
+        <div className="timer-item">
+          <span>{timeItem}</span>{timeItem === 1 ? 'Day' : word}
+        </div>
+      )
+    }
   }
 
   const mapNumber = (number, in_min, in_max, out_min, out_max) => {
@@ -64,14 +65,13 @@ const CustomCountdown = ({date, type}) => {
   }
 
   return (
-     <div className={type === "radius"
-       ? "timer-container" : "countdown-wrapper"}>
-        {renderLeftDate(months, monthsRadius, 'Months', type)}
-        {renderLeftDate(days, daysRadius, 'Days', type)}
-        {renderLeftDate(hours, hoursRadius, 'Hours', type)}
-        {renderLeftDate(minutes, minutesRadius, 'Min', type)}
-        {renderLeftDate(seconds, secondsRadius, 'Sec', type)}
-      </div>
+   <div className={type === "radius" ? "timer-container" : "countdown-wrapper"}>
+     {renderLeftDate(months, monthsRadius, 'Months')}
+     {renderLeftDate(days, daysRadius, 'Days')}
+     {renderLeftDate(hours, hoursRadius, 'Hours')}
+     {renderLeftDate(minutes, minutesRadius, 'Min')}
+     {renderLeftDate(seconds, secondsRadius, 'Sec')}
+   </div>
   );
 }
 
