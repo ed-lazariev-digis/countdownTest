@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from "moment";
 import SVGCircle from "./SVGCircle";
 
-const CustomCountdown = ({date}) => {
+const CustomCountdown = ({date, type}) => {
   const [counter, setCounter] = useState({
     months: '0',
     days: '0',
@@ -28,19 +28,22 @@ const CustomCountdown = ({date}) => {
     return () => clearInterval(timer);
   }, [date]);
 
-  const renderLeftDate = (timeItem, timeRadius, word) => (
-    <div className="countdown-item">
-      <SVGCircle radius={timeRadius} />
-      {timeItem}
-      <span>{word}</span>
-    </div>
-  )
-
-  const renderLeftDateSecond = (timeItem, word) => (
-    <li>
-      <span id='seconds'>{timeItem}</span>{timeItem === 1 ? 'Day' : word}
-    </li>
-  )
+  const renderLeftDate = (timeItem, timeRadius, word, type) => {
+    return (
+      <>
+        {type === "radius" ?
+          <div className="countdown-item">
+            <SVGCircle radius={timeRadius}/>
+            {timeItem}
+            <span>{word}</span>
+          </div>
+        :
+          <div className="timer-item">
+            <span>{timeItem}</span>{timeItem === 1 ? 'Day' : word}
+          </div>}
+      </>
+    )
+  }
 
   const mapNumber = (number, in_min, in_max, out_min, out_max) => {
     return (
@@ -61,25 +64,14 @@ const CustomCountdown = ({date}) => {
   }
 
   return (
-    <div>
-      <div className="countdown-wrapper">
-        {renderLeftDate(months, monthsRadius, 'Months')}
-        {renderLeftDate(days, daysRadius, 'Days')}
-        {renderLeftDate(hours, hoursRadius, 'Hours')}
-        {renderLeftDate(minutes, minutesRadius, 'Min')}
-        {renderLeftDate(seconds, secondsRadius, 'Sec')}
+     <div className={type === "radius"
+       ? "timer-container" : "countdown-wrapper"}>
+        {renderLeftDate(months, monthsRadius, 'Months', type)}
+        {renderLeftDate(days, daysRadius, 'Days', type)}
+        {renderLeftDate(hours, hoursRadius, 'Hours', type)}
+        {renderLeftDate(minutes, minutesRadius, 'Min', type)}
+        {renderLeftDate(seconds, secondsRadius, 'Sec', type)}
       </div>
-
-      <div className='timer-container'>
-        <ul>
-          {renderLeftDateSecond(months, 'Months')}
-          {renderLeftDateSecond(days, 'Days')}
-          {renderLeftDateSecond(hours, 'Hours')}
-          {renderLeftDateSecond(minutes, 'Min')}
-          {renderLeftDateSecond(seconds, 'Sec')}
-        </ul>
-      </div>
-    </div>
   );
 }
 

@@ -11,6 +11,7 @@ function App() {
       </header>
       <div className="content">
         <Countdown date='2021-12-24T00:00:00' />
+        <CustomCountdown date='2021-12-24T00:00:00' type="radius" />
         <CustomCountdown date='2021-12-24T00:00:00' />
       </div>
     </div>

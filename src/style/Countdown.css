@@ -37,13 +37,7 @@
   justify-content: center;
 }
 
-.timer-container ul {
-  display: flex;
-  list-style: none;
-  padding: 10px;
-}
-
-.timer-container ul li {
+.timer-item {
   display: flex;
   flex-direction: column;
   padding: 25px;
